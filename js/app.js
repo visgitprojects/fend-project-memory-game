@@ -7,6 +7,7 @@ let shuffleArray=[];
 let upCardsList=[];
 
 for(let i = 0; i < cardsArray.length; i++){
+  //find classes of symbols and push to array to shuffle
   shuffleArray.push(document.querySelectorAll('li.card>i')[i].className);
 }
 
@@ -34,12 +35,19 @@ function shuffle(array) {
 }
 function shuffleButton(){
 
+  //shuffle class names
     shuffle(shuffleArray);
 
     for(let i = 0; i < shuffleArray.length; i++){
+    // set class names to shuffled
       document.querySelectorAll('li.card>i')[i].className = shuffleArray[i];
+      //flip cards
+      document.querySelectorAll('li.card')[i].className ='card'
     }
+    //resetcard count list
+    upCardsList =[];
   }
+
 function growList(classN){
   if(upCardsList.length < 2)
   {
@@ -57,14 +65,16 @@ function growList(classN){
 }
 
 function showCard(e){
-
+  //if so it doesn't change the class of the wrong node as make sure the card hasn't already been matched
   if( e.target.nodeName === "LI" && e.target.className != 'card match'){
+    //change the clicked class to show card symbol
     e.target.className = "card open show";
-
+    //call list function
     growList(e.target.children[0].className);
   }
   else if(e.target.nodeName === "I" && e.target.parentElement.className != 'card match')
   {
+    //change the clicked class to show card symbol
     e.target.parentElement.className = "card open show";
     growList(e.target.className);
   }
@@ -73,8 +83,10 @@ for (var i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', showCard);
 }
 
+//start after load with shuffled cards
 shuffleButton();
 
+//check if restart button clicked then call shuffle
 document.querySelector('.restart').addEventListener('click', shuffleButton);
 
 /*
