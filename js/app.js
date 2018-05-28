@@ -41,14 +41,16 @@ function shuffleButton(){
   }
 function showCard(e){
 
-  if( e.target.nodeName = "LI"){
+  if( e.target.nodeName === "LI"){
     e.target.className = "card open show";
+    console.log(e.target.nodeName);
   }
-  else if(e.target.nodeName = "I")
+  else if(e.target.nodeName === "I")
   {
-    e.parentElement.target.className = "card open show";
+    console.log(e.target.parentElement.className);
+    e.target.parentElement.className = "card open show";
   }
-  }
+}
 for (var i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', showCard);
 }
