@@ -167,7 +167,7 @@ function showCard(e){
      alert("Ran out of moves! Restart the game!");
    }
   if (score == 8){
-    alert("You win with "+score+" matches");
+    alert("You win with "+score+" matches! With " + starCount + " stars left.");
   }
 }
 for (var i = 0; i < cards.length; i++) {
