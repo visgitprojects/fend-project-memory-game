@@ -3,12 +3,15 @@
  */
 const cards = document.getElementsByClassName('card')
 const cardsArray = [].slice.call(document.querySelectorAll('li.card >i'));
+const cardsNotArray= document.querySelectorAll('li.card>i');
 let shuffleArray=[];
 let upCardsList=[];
+let showCardsNotArray;
 
-for(let i = 0; i < cardsArray.length; i++){
+
+for(let i = 0; i < cardsNotArray.length; i++){
   //find classes of symbols and push to array to shuffle
-  shuffleArray.push(document.querySelectorAll('li.card>i')[i].className);
+  shuffleArray.push(cardsNotArray[i].className);
 }
 
 /*
@@ -40,7 +43,7 @@ function shuffleButton(){
 
     for(let i = 0; i < shuffleArray.length; i++){
     // set class names to shuffled
-      document.querySelectorAll('li.card>i')[i].className = shuffleArray[i];
+      cardsNotArray[i].className = shuffleArray[i];
       //flip cards
       document.querySelectorAll('li.card')[i].className ='card'
     }
@@ -49,34 +52,62 @@ function shuffleButton(){
   }
 
 function growList(classN){
+  //check that grolist only has two cards
   if(upCardsList.length < 2)
   {
+    //add class of click to list
     upCardsList.push(classN);
-    console.log(upCardsList)
+    //console.log(classN.parentElement.className)
   }
-  else if(upCardsList.length == 2)
+  }
+function checkMatch(classN){
+  showCardsNotArray= document.querySelectorAll('li.show');
+  if(upCardsList.length ==2)
   {
-    if(upCardsList[0]== upCardsList[1])
+    //upCardsList.push(classN);
+    //check if click classes on list match
+    if(upCardsList[0].className == upCardsList[1].className)
     {
 
-    }
+      for(let i = 0; i < showCardsNotArray.length; i++){
+        //set the cards to matches
+        //for(let i = 0; i < shuffleArray.length; i++){
+        showCardsNotArray[i].className = 'card match'
+      }
 
-  }
+      //reset list of cardsArray
+        upCardsList = [];
+    }
+    else if(upCardsList[0].className != upCardsList[1].className){
+
+        //console.log(showCardsNotArray.length);
+        for(let i = 0; i < showCardsNotArray.length; i++){
+          console.log('not match');
+          //console.log(cards);
+          showCardsNotArray[i].className = 'card'
+        }
+        //cards.className = 'card';
+        //reset list of cardsArray
+          upCardsList = [];
+      }
+    }
 }
 
 function showCard(e){
   //if so it doesn't change the class of the wrong node as make sure the card hasn't already been matched
-  if( e.target.nodeName === "LI" && e.target.className != 'card match'){
+  if( e.target.nodeName === "LI" && e.target.className != 'card match' && upCardsList.length < 3){
     //change the clicked class to show card symbol
     e.target.className = "card open show";
     //call list function
-    growList(e.target.children[0].className);
+    growList(e.target.children[0]);
+    checkMatch(e.target.children[0]);
   }
-  else if(e.target.nodeName === "I" && e.target.parentElement.className != 'card match')
+  else if(e.target.nodeName === "I" && e.target.parentElement.className != 'card match' && upCardsList.length < 3)
   {
     //change the clicked class to show card symbol
     e.target.parentElement.className = "card open show";
-    growList(e.target.className);
+    growList(e.target);
+    checkMatch(e.target);
   }
 }
 for (var i = 0; i < cards.length; i++) {
