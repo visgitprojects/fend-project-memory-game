@@ -29,8 +29,16 @@ function shuffle(array) {
 
     return array;
 }
+function shuffleButton(){
 
+    shuffledArray = shuffle(cardsArray);
 
+    for(let i = 0; i < cardsArray.length; i++){
+      document.querySelectorAll('li.card>i')[i].className = shuffledArray[i].className;
+    }
+  }
+
+document.querySelector('.restart').addEventListener('click', shuffleButton);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
