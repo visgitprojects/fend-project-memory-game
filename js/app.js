@@ -2,13 +2,18 @@
 * Create a list that holds all of your cards
 */
 const cards = document.getElementsByClassName('card')
+//array of cards elelements
 const cardsArray = [].slice.call(document.querySelectorAll('li.card >i'));
+//nodelist of card elements
 const cardsNotArray= document.querySelectorAll('li.card>i');
 let shuffleArray=[];
 let upCardsList=[];
 let starCount = 3;
 let starHiddenCount = 0;
 let showCardsNotArray;
+//number of moves element
+const movesNotArray = document.querySelectorAll('.moves');
+//nodelist of stars symbols
 let starsNotArray= document.querySelectorAll('.fa-star');
 
 
@@ -51,6 +56,7 @@ function shuffleButton(){
     document.querySelectorAll('li.card')[i].className ='card'
   }
   //resetcard count list
+  resetStars();
   upCardsList =[];
 }
 
@@ -113,9 +119,25 @@ function stars(){
     }
     //hide one star
     starsNotArray[(starHiddenCount-1)].style.visibility = "hidden"
+    //update number of moves text
+    movesNotArray[0].innerText = (starHiddenCount-1).toString();
+
     //subtract starcount(number of available moves)
     starCount--;
 }
+function resetStars(){
+  //reset count of stars hidden
+    for(let i = 0; i < starsNotArray.length; i++){
+        //reset stars visibility
+        starsNotArray[i].style.visibility = "visible"
+      }
+    //reset number of moves
+    movesNotArray[0].innerText = 3;
+
+    //reset star count
+    starCount = 3;
+}
+
 function showCard(e){
   if(starCount > 0){
     //if so it doesn't change the class of the wrong node as make sure the card hasn't already been matched
