@@ -57,21 +57,20 @@ function growList(classN){
   {
     //add class of click to list
     upCardsList.push(classN);
-    //console.log(classN.parentElement.className)
   }
   }
 function checkMatch(classN){
+  //get cards that are currently showing
   showCardsNotArray= document.querySelectorAll('li.show');
+
   if(upCardsList.length ==2)
   {
-    //upCardsList.push(classN);
     //check if click classes on list match
     if(upCardsList[0].className == upCardsList[1].className)
     {
 
       for(let i = 0; i < showCardsNotArray.length; i++){
         //set the cards to matches
-        //for(let i = 0; i < shuffleArray.length; i++){
         showCardsNotArray[i].className = 'card match'
       }
 
@@ -79,15 +78,12 @@ function checkMatch(classN){
         upCardsList = [];
     }
     else if(upCardsList[0].className != upCardsList[1].className){
-
-        //console.log(showCardsNotArray.length);
+      setTimeout(function () {
         for(let i = 0; i < showCardsNotArray.length; i++){
-          console.log('not match');
-          //console.log(cards);
           showCardsNotArray[i].className = 'card'
         }
-        //cards.className = 'card';
-        //reset list of cardsArray
+      }, 300);
+
           upCardsList = [];
       }
     }
