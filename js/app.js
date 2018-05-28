@@ -1,9 +1,14 @@
 /*
  * Create a list that holds all of your cards
  */
-let cardsArray = [].slice.call(document.querySelectorAll('li.card>i'));
+const cards = document.getElementsByClassName('card')
+const cardsArray = [].slice.call(document.querySelectorAll('li.card >i'));
+const shuffleArray=[];
 
-let shuffledArray;
+for(let i = 0; i < cardsArray.length; i++){
+  shuffleArray.push(document.querySelectorAll('li.card>i')[i].className);
+}
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -28,14 +33,30 @@ function shuffle(array) {
 }
 function shuffleButton(){
 
-    shuffledArray = shuffle(cardsArray);
+    shuffle(shuffleArray);
 
-    for(let i = 0; i < cardsArray.length; i++){
-      document.querySelectorAll('li.card>i')[i].className = shuffledArray[i].className;
+    for(let i = 0; i < shuffleArray.length; i++){
+      document.querySelectorAll('li.card>i')[i].className = shuffleArray[i];
     }
   }
+function showCard(e){
+
+  if( e.target.nodeName = "LI"){
+    e.target.className = "card open show";
+  }
+  else if(e.target.nodeName = "I")
+  {
+    e.parentElement.target.className = "card open show";
+  }
+  }
+for (var i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('click', showCard);
+}
+
 shuffleButton();
+
 document.querySelector('.restart').addEventListener('click', shuffleButton);
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
