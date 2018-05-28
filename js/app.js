@@ -17,6 +17,8 @@ const movesNotArray = document.querySelectorAll('.moves');
 let starsNotArray= document.querySelectorAll('.fa-star');
 //score tracker
 let score = 0;
+//moves counter
+let movesCounter = 0;
 
 let startingTime = performance.now();
 let endingTime = performance.now();
@@ -61,8 +63,11 @@ function shuffleButton(){
     //flip cards
     document.querySelectorAll('li.card')[i].className ='card'
   }
-  //resetcard count list
+  //reset moves counted
+  movesCounter = 0;
+  //reset stars showing
   resetStars();
+  //resetcard count list
   upCardsList =[];
   score = 0;
 }
@@ -91,13 +96,13 @@ function checkMatch(classN){
         showCardsNotArray[i].className = 'card match'
 
       }
-        score++;
+      score++;
       //reset list of cardsArray
       upCardsList = [];
     }
     //check if click classes on list don't match
     else if(upCardsList[0].className != upCardsList[1].className){
-        //added delay because it hid the second card to quickly to see symbol
+      //added delay because it hid the second card to quickly to see symbol
       setTimeout(function () {
         for(let i = 0; i < showCardsNotArray.length; i++){
           //hide cards that aren't matches
@@ -105,7 +110,13 @@ function checkMatch(classN){
         }
       }, 300);
       //check number of moves
-     stars();
+      if(movesCounter>= 10 && movesCounter <=20 && starCount > 2){
+        stars();
+      }
+      else if (movesCounter>= 20 && movesCounter <=30 && starCount == 2){
+        stars();
+      }
+
 
       //reset list of cardsArray
       upCardsList = [];
@@ -115,39 +126,43 @@ function checkMatch(classN){
 function stars(){
   //reset count of stars hidden
   starHiddenCount=0;
-
-    for(let i = 0; i < starsNotArray.length; i++){
-      //check if star is hidden
-      if(starsNotArray[i].style.visibility != "hidden")
-      {
-        //if not hidden then increment count
-        starHiddenCount++;
-      }
-
+  for(let i = 0; i < starsNotArray.length; i++){
+    //check if star is hidden
+    if(starsNotArray[i].style.visibility != "hidden")
+    {
+      //if not hidden then increment count
+      starHiddenCount++;
     }
-    //hide one star
-    starsNotArray[(starHiddenCount-1)].style.visibility = "hidden"
-    //update number of moves text
-    movesNotArray[0].innerText = (starHiddenCount-1).toString();
 
-    //subtract starcount(number of available moves)
-    starCount--;
+  }
+  //hide one star
+  starsNotArray[(starHiddenCount-1)].style.visibility = "hidden"
+
+  //subtract starcount(number of available moves)
+  starCount--;
 }
 function resetStars(){
   //reset count of stars hidden
-    for(let i = 0; i < starsNotArray.length; i++){
-        //reset stars visibility
-        starsNotArray[i].style.visibility = "visible"
-      }
-    //reset number of moves
-    movesNotArray[0].innerText = 3;
+  for(let i = 0; i < starsNotArray.length; i++){
+    //reset stars visibility
+    starsNotArray[i].style.visibility = "visible"
+  }
+  //reset number of moves
+  movesNotArray[0].innerText = 0;
 
-    //reset star count
-    starCount = 3;
+  //reset star count
+  starCount = 3;
 }
-
+function moves(){
+  //update number of moves text
+  movesNotArray[0].innerText = movesCounter.toString();
+}
 function showCard(e){
-  if(starCount > 0){
+  //update number of moves
+  movesCounter++;
+  //update display of moves
+  moves();
+
     //if so it doesn't change the class of the wrong node as make sure the card hasn't already been matched
     if( e.target.nodeName === "LI" && e.target.className != 'card match' && upCardsList.length < 3){
       //change the clicked class to show card symbol
@@ -166,15 +181,13 @@ function showCard(e){
       //check cards for match
       checkMatch(e.target);
     }
-  }
-   else if(starCount <= 0){
-     alert("Ran out of moves! Restart the game!");
-   }
+
+
   if (score == 8){
     //record ending time
     endingTime = performance.now();
 
-    alert("You win with "+score+" matches! With " + starCount + " stars left. It took " +(endingTime - startingTime) + ' milliseconds.' );
+    alert("You win with "+score+" matches!  With "+movesCounter+" moves. With " + starCount + " stars left. It took " +(((endingTime - startingTime)% 60000) / 1000).toFixed(0) + ' seconds.' );
   }
 }
 for (var i = 0; i < cards.length; i++) {
@@ -183,6 +196,7 @@ for (var i = 0; i < cards.length; i++) {
 }
 
 //start after load with shuffled cards
+movesNotArray[0].innerText = 0;
 shuffleButton();
 
 //check if restart button clicked then call shuffle
