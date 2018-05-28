@@ -18,6 +18,9 @@ let starsNotArray= document.querySelectorAll('.fa-star');
 //score tracker
 let score = 0;
 
+let startingTime = performance.now();
+let endingTime = performance.now();
+
 
 for(let i = 0; i < cardsNotArray.length; i++){
   //find classes of symbols and push to array to shuffle
@@ -47,7 +50,8 @@ function shuffle(array) {
   return array;
 }
 function shuffleButton(){
-
+  //reset start time
+  startingTime = performance.now();
   //shuffle class names
   shuffle(shuffleArray);
 
@@ -167,7 +171,10 @@ function showCard(e){
      alert("Ran out of moves! Restart the game!");
    }
   if (score == 8){
-    alert("You win with "+score+" matches! With " + starCount + " stars left.");
+    //record ending time
+    endingTime = performance.now();
+
+    alert("You win with "+score+" matches! With " + starCount + " stars left. It took " +(endingTime - startingTime) + ' milliseconds.' );
   }
 }
 for (var i = 0; i < cards.length; i++) {
