@@ -23,6 +23,11 @@ let movesCounter = 0;
 let startingTime = performance.now();
 let endingTime = performance.now();
 
+//add timer to page
+let timer = document.createElement("P")
+timer.className = 'timer'
+document.getElementsByTagName("DIV")[0].appendChild(timer);
+const timerNotArray = document.querySelectorAll('.timer');
 
 for(let i = 0; i < cardsNotArray.length; i++){
   //find classes of symbols and push to array to shuffle
@@ -153,13 +158,15 @@ function resetStars(){
   //reset star count
   starCount = 3;
 }
+
 function moves(){
+    movesCounter++;
   //update number of moves text
   movesNotArray[0].innerText = movesCounter.toString();
 }
 function showCard(e){
   //update number of moves
-  movesCounter++;
+
   //update display of moves
   moves();
 
@@ -201,7 +208,14 @@ shuffleButton();
 
 //check if restart button clicked then call shuffle
 document.querySelector('.restart').addEventListener('click', shuffleButton);
+//set timer update Interval
+let timerInterval = setInterval(timerUpdate, 1000);
 
+function timerUpdate()
+{
+  endingTime = performance.now();
+    timerNotArray[0].innerText = +(((endingTime - startingTime)% 60000) / 1000).toFixed(0) + ' seconds.';
+}
 /*
 * set up the event listener for a card. If a card is clicked:
 *  - display the card's symbol (put this functionality in another function that you call from this one)
