@@ -3,7 +3,8 @@
  */
 const cards = document.getElementsByClassName('card')
 const cardsArray = [].slice.call(document.querySelectorAll('li.card >i'));
-const shuffleArray=[];
+let shuffleArray=[];
+let upCardsList=[];
 
 for(let i = 0; i < cardsArray.length; i++){
   shuffleArray.push(document.querySelectorAll('li.card>i')[i].className);
@@ -39,16 +40,33 @@ function shuffleButton(){
       document.querySelectorAll('li.card>i')[i].className = shuffleArray[i];
     }
   }
+function growList(classN){
+  if(upCardsList.length < 2)
+  {
+    upCardsList.push(classN);
+    console.log(upCardsList)
+  }
+  else if(upCardsList.length == 2)
+  {
+    if(upCardsList[0]== upCardsList[1])
+    {
+
+    }
+
+  }
+}
+
 function showCard(e){
 
-  if( e.target.nodeName === "LI"){
+  if( e.target.nodeName === "LI" && e.target.className != 'card match'){
     e.target.className = "card open show";
-    console.log(e.target.nodeName);
+
+    growList(e.target.children[0].className);
   }
-  else if(e.target.nodeName === "I")
+  else if(e.target.nodeName === "I" && e.target.parentElement.className != 'card match')
   {
-    console.log(e.target.parentElement.className);
     e.target.parentElement.className = "card open show";
+    growList(e.target.className);
   }
 }
 for (var i = 0; i < cards.length; i++) {
