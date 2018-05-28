@@ -14,3 +14,5 @@ To play game load index.html in browser.  A timer will start to count as soon as
 This repository is my submission for Udacity FEND Nanodegree and requires no contribution. Therefore, we most likely will not accept pull requests.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+
+My github repository https://github.com/visgitprojects/fend-project-memory-game.git.
