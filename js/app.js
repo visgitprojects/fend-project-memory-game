@@ -15,6 +15,8 @@ let showCardsNotArray;
 const movesNotArray = document.querySelectorAll('.moves');
 //nodelist of stars symbols
 let starsNotArray= document.querySelectorAll('.fa-star');
+//score tracker
+let score = 0;
 
 
 for(let i = 0; i < cardsNotArray.length; i++){
@@ -58,10 +60,11 @@ function shuffleButton(){
   //resetcard count list
   resetStars();
   upCardsList =[];
+  score = 0;
 }
 
 function growList(classN){
-  //check that grolist only has two cards
+  //check that growlist only has two cards
   if(upCardsList.length < 2)
   {
     //add class of click to list
@@ -82,8 +85,9 @@ function checkMatch(classN){
       for(let i = 0; i < showCardsNotArray.length; i++){
         //set the cards to matches
         showCardsNotArray[i].className = 'card match'
-      }
 
+      }
+        score++;
       //reset list of cardsArray
       upCardsList = [];
     }
@@ -97,7 +101,7 @@ function checkMatch(classN){
         }
       }, 300);
       //check number of moves
-      stars();
+     stars();
 
       //reset list of cardsArray
       upCardsList = [];
@@ -159,8 +163,11 @@ function showCard(e){
       checkMatch(e.target);
     }
   }
-  else if(starCount <= 0){
-    alert("Ran out of moves! Restart the game!");
+   else if(starCount <= 0){
+     alert("Ran out of moves! Restart the game!");
+   }
+  if (score == 8){
+    alert("You win with "+score+" matches");
   }
 }
 for (var i = 0; i < cards.length; i++) {
