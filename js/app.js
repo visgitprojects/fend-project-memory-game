@@ -101,7 +101,7 @@ function checkMatch(classN){
         }
       }, 300);
       //check number of moves
-     stars();
+    // stars();
 
       //reset list of cardsArray
       upCardsList = [];
@@ -145,7 +145,7 @@ function resetStars(){
 function showCard(e){
   if(starCount > 0){
     //if so it doesn't change the class of the wrong node as make sure the card hasn't already been matched
-    if( e.target.nodeName === "LI" && e.target.className != 'card match' && upCardsList.length < 3){
+    if( e.target.nodeName === "LI" && e.target.className != 'card match' ){//&& upCardsList.length < 3){
       //change the clicked class to show card symbol
       e.target.className = "card open show";
       //call list function
@@ -153,7 +153,7 @@ function showCard(e){
       //check cards for match
       checkMatch(e.target.children[0]);
     }
-    else if(e.target.nodeName === "I" && e.target.parentElement.className != 'card match' && upCardsList.length < 3)
+    else if(e.target.nodeName === "I" && e.target.parentElement.className != 'card match' ) //&& upCardsList.length < 3)
     {
       //change the clicked class to show card symbol
       e.target.parentElement.className = "card open show";
@@ -163,9 +163,9 @@ function showCard(e){
       checkMatch(e.target);
     }
   }
-   else if(starCount <= 0){
-     alert("Ran out of moves! Restart the game!");
-   }
+   // else if(starCount <= 0){
+   //   alert("Ran out of moves! Restart the game!");
+   // }
   if (score == 8){
     alert("You win with "+score+" matches");
   }
